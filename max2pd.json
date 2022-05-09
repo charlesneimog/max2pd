@@ -1,12 +1,17 @@
 {
     "max2pd": {
+        "sfrecord~": "writesf~",
+        "sfplay~": "readsf~",
         "cycle~": "osc~",
         "udpreceive": "netreceive",
         "udpsend": "netsend",
         "round": "else/quantizer",
         "split": "else/spread",
         "round~": "else/quantizer~"
+        
     },
+
+
     "pdobjects": {
         "+": "+",
         "-": "-",
@@ -16,10 +21,9 @@
         "-~": "-~",
         "*~": "*~",
         "route": "route",
-
-
-
-
+        "inlet": "inlet",
+        "outlet": "outlet",
+        "adc~": "adc~",
         "dac~": "dac~"
         }
 }

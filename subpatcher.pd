@@ -8,5 +8,16 @@
 #X restore 62 96 pd;
 #X msg 62 68 2;
 #X obj 62 131 print;
+#X msg 189 71 2;
+#X obj 189 134 print;
+#N canvas 0 50 450 300 casa 0;
+#X obj 108 53 inlet;
+#X obj 110 182 outlet;
+#X obj 108 146 +;
+#X connect 0 0 2 0;
+#X connect 2 0 1 0;
+#X restore 189 99 pd casa;
 #X connect 0 0 2 0;
 #X connect 1 0 0 0;
+#X connect 3 0 5 0;
+#X connect 5 0 4 0;
