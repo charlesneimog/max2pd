@@ -1,0 +1,12 @@
+#N canvas 531 234 835 418 12;
+#N canvas 0 50 450 300 (subpatch) 0;
+#X obj 108 53 inlet;
+#X obj 110 182 outlet;
+#X obj 108 146 +;
+#X connect 0 0 2 0;
+#X connect 2 0 1 0;
+#X restore 62 96 pd;
+#X msg 62 68 2;
+#X obj 62 131 print;
+#X connect 0 0 2 0;
+#X connect 1 0 0 0;

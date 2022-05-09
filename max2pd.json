@@ -1,0 +1,25 @@
+{
+    "max2pd": {
+        "cycle~": "osc~",
+        "udpreceive": "netreceive",
+        "udpsend": "netsend",
+        "round": "else/quantizer",
+        "split": "else/spread",
+        "round~": "else/quantizer~"
+    },
+    "pdobjects": {
+        "+": "+",
+        "-": "-",
+        "*": "*",
+        "/": "/",
+        "+~": "+~",	
+        "-~": "-~",
+        "*~": "*~",
+        "route": "route",
+
+
+
+
+        "dac~": "dac~"
+        }
+}
