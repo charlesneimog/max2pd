@@ -11,10 +11,20 @@
         "round~": "else/quantizer~",
         "counter": "cyclone/counter",
         "zl": "cyclone/zl",
-        "coll": "cyclone/coll"
-        
-
+        "atodb~": "else/lin2db~",
+        "sprintf": "else/format",
+        "scale": "else/rescale",
+        "coll": "cyclone/coll",
+        "minmax~": "else/range~",
+        "onebang": "else/nmess",
+        "edge~": "cyclone/edge~",
+        "out~" : "outlet~", 
+        "in": "inlet",
+        "prepend": "list prepend", 
+        "HERE_THE_NAME_ON_MAX": "HERE_THE_NAME_ON_PD"
     },
+
+
     "pdobjects": {
         "_DESCRIPTION_": "Here we will put links to replace objects",
         "+": "+",
@@ -36,6 +46,7 @@
         "metro": "metro",
         "int": "int", 
         "pack": "pack", 
+        "unpack": "unpack",
         "sig~": "sig~",
         "abs~": "abs~",
         "sqrt~": "sqrt~",

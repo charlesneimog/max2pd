@@ -4,6 +4,7 @@ from tkinter import filedialog
 import os
 import sys
 
+THERE_IS_ERRORS = False
 
 class pcolors:
     HEADER = '\033[95m'
@@ -45,7 +46,7 @@ time.sleep(1.5)
 
 root = tk.Tk()
 root.withdraw()
-file_path = filedialog.askopenfilename()
+file_path = filedialog.askopenfilename(filetypes=[("Max patch files", "*.maxpat")])
 FILE = file_path
 
 if FILE == '':
@@ -109,8 +110,7 @@ def max2pd(json_data):
             except:
                 try:
                     PD_OBJECT_NAME = max2pd_objects['pdobjects'][OBJECT_NAME] ## Check if it is one PD object
-                
-                
+            
                 except: # if it is not a PD object, it is a subpatcher (p) or a poly~
                     if OBJECT_NAME == 'p':
                         subpatcher_name = box['box']['text']
@@ -122,23 +122,25 @@ def max2pd(json_data):
                         for line in sub_patch:
                             PATCH.append(line)
                         sub_patch = True
+                        print(f'{pcolors.BLUE}Subpatch {subpatcher_name} done!{pcolors.ENDC}')
                     
                     elif OBJECT_NAME == 'poly~':
-                        
                         subpatcher_name = box['box']['text']
-                        subpatcher_name = subpatcher_name.split('poly~')[1]
+                        subpatcher_name = subpatcher_name.split('poly~ ')[1]
+                        subpatcher_name = subpatcher_name.split(' ')[0]
                         print(f'{pcolors.BLUE}Converting {subpatcher_name} subpatch...{pcolors.ENDC}')
                         folder = os.path.dirname(FILE)
                         # Folder + OBJECT_NAME
-                        subpatch_filename = folder + '/' + OBJECT_NAME + '.maxpat'
+                        subpatch_filename = folder + '/' + subpatcher_name + '.maxpat'
+                        print(subpatch_filename)
                         if os.path.isfile(subpatch_filename):
                             convert2pd(subpatch_filename)
                         else:
                             print(f'{pcolors.FAIL}Sorry, the poly~ subpath not found: ' + f'{pcolors.BLUE}' + OBJECT_NAME + f'{pcolors.ENDC}')
-                            # write names of objects not found
                         # Aqui vai a recursão
-                        clone_obj = '#X obj ' + x_y_position + subpatcher_name + ';'
+                        clone_obj = '#X obj ' + x_y_position + " clone " + subpatcher_name + " 32" + ';'
                         PATCH.append(clone_obj)
+                        sub_patch = True                   
                     
                     else:    
                         # Get folder of FILE
@@ -149,12 +151,11 @@ def max2pd(json_data):
                             convert2pd(subpatch_filename)
                         else:                      
                             print(f'{pcolors.FAIL}Object not found: ' + f'{pcolors.BLUE}' + OBJECT_NAME + f'{pcolors.ENDC}')
-                            # write names of objects not found
-                            
-                            #
                             with open('objects_not_found.txt', 'a') as f:
                                 f.write(OBJECT_NAME + '\n')
-
+                            global THERE_IS_ERRORS
+                            THERE_IS_ERRORS = True
+                          
                     PD_OBJECT_NAME = OBJECT_NAME
             
             if sub_patch == False:
@@ -167,17 +168,39 @@ def max2pd(json_data):
         #     x_y_position = box['box']['patching_rect'][:2]
         #     x_y_position = str(x_y_position[0]) + str(x_y_position[1])
         
+
+        # numbers
+        elif box['box']['maxclass'] == 'number' or box['box']['maxclass'] == 'flonum':
+            x_y_position = box['box']['patching_rect'][:2]
+            x_y_position = str(x_y_position[0]) + " " + str(x_y_position[1])
+            tamanho = 5
+            #X obj 175 114 nbx 5 14 -1e+037 1e+037 0 0 empty empty empty 0 -8 0
+            VALUE = '#X obj ' + x_y_position + ' nbx ' + str(tamanho) + "14 -1e+037 1e+037 0 0 empty empty empty 0 -8 0 ;"
+            PATCH.append(VALUE)
+
+
+        elif box['box']['maxclass'] == 'number~':
+            x_y_position = box['box']['patching_rect'][:2]
+            x_y_position = str(x_y_position[0]) + " " + str(x_y_position[1])
+            OBJECT_NAME = 'cyclone/number~'
+            VALUE = '#X obj ' + x_y_position + ' ' + OBJECT_NAME + ' ' + ' ;'
+
         # =====================================================
-        # elif box['box']['maxclass'] == 'button': # Bang 
-        #     x_y_position = box['box']['patching_rect'][:2]
-        #     x_y_position = str(x_y_position[0]) + str(x_y_position[1])
-        
+        elif box['box']['maxclass'] == 'button': # Bang 
+            x_y_position = box['box']['patching_rect'][:2]
+            x_y_position = str(x_y_position[0]) + ' ' + str(x_y_position[1])
+            tamanho = 15 ## GET THE SIZE OF THE BANG
+            VALUE = '#X obj ' + x_y_position + f' bng {tamanho}  250 50 0' + ' empty empty empty 17 7 0 10 -262144' + ' ;'
+            PATCH.append(VALUE)
+            
         # =====================================================
 
         elif box['box']['maxclass'] == 'toggle': # Toggle
             x_y_position = box['box']['patching_rect'][:2]
-            x_y_position = str(x_y_position[0]) + str(x_y_position[1])
-
+            x_y_position = str(x_y_position[0]) + ' ' + str(x_y_position[1])
+            tamanho = 15 ## GET THE SIZE OF THE TOGGLE TODO
+            VALUE = '#X obj ' + x_y_position + f' tgl {tamanho}  250 50 0' + ' empty empty empty 17 7 0 10 -262144' + ' ;'
+            PATCH.append(VALUE)
 
 
         elif box['box']['maxclass'] == 'inlet':
@@ -214,13 +237,18 @@ def max2pd(json_data):
                 message_text = ' '
             VALUE = "#X text" + " " + x_y_position + " " + message_text + " ;" 
             PATCH.append(VALUE)
-            
+
         # =====================================================
         else: 
             x_y_position = box['box']['patching_rect'][:2]
             x_y_position = str(x_y_position[0]) + str(x_y_position[1])
             print(f'{pcolors.FAIL}NEED TO BE IMPLEMENTEND: ', box['box']['maxclass'] , pcolors.ENDC)
             x_y_position = box['box']['patching_rect'][:2]
+            x_y_position = str(x_y_position[0]) + " " + str(x_y_position[1])
+            # pd += "\n#X " + "obj "+ args[0] + " bogus" + ";";
+            VALUE = "#X " + "obj" + " " + x_y_position + " " + "NEED_TO_BE_IMPLEMENTED!" + " ;"
+            PATCH.append(VALUE)
+
                 
     ## This will change all the 
     for line in lines:
@@ -241,27 +269,32 @@ convert2pd(FILE)
 
 
 ## read 
-with open('objects_not_found.txt') as f:
-    # if file not exists, create it
-    lines = f.readlines()
-# remove \n from the end of each line
-lines = [line.rstrip('\n') for line in lines]
-# remove duplicates
 
+if THERE_IS_ERRORS:
+    with open('objects_not_found.txt') as f:
+        # if file not exists, create it
+        lines = f.readlines()
+    # remove \n from the end of each line
+    lines = [line.rstrip('\n') for line in lines]
+    # remove duplicates
 
-seen = set()
-result = []
-for item in lines:
-    if item not in seen:
-        seen.add(item)
-        result.append(item)
+    seen = set()
+    result = []
+    for item in lines:
+        if item not in seen:
+            seen.add(item)
+            result.append(item)
+    print(result)
 
-print(result)
+    ## delte objects_not_found.txt
+    try:
+        os.remove('objects_not_found.txt')
+    except:
+        pass
 
-## delte objects_not_found.txt
-os.remove('objects_not_found.txt')
-
-# write lines to file
-with open('PLEASE_REPORT_missing_objects.txt', 'w') as f:
-    for line in result:
-        f.write(line + '\n')
+    # write lines to file
+    
+    if result != []:
+        with open('PLEASE_REPORT_missing_objects.txt', 'w') as f:
+            for line in result:
+                f.write(line + '\n')
