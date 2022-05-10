@@ -18,8 +18,6 @@
         "minmax~": "else/range~",
         "onebang": "else/nmess",
         "edge~": "cyclone/edge~",
-        "out~" : "outlet~", 
-        "in": "inlet",
         "prepend": "list prepend", 
         "HERE_THE_NAME_ON_MAX": "HERE_THE_NAME_ON_PD"
     },
