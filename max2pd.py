@@ -23,12 +23,12 @@ def print_in_thinker(string, color, root):
     # Draw the string always on the same line
     root.title(string)
     msg = tk.Message(root, text = string)
-    msg.config(fg=color, font=('times', 12), width=500, justify='center')
+    msg.config(fg=color, font=('Palatino', 12), width=500, justify='center')
     # msg pack in the same line
     msg.pack()
     root.update()
     msg.destroy()
-    time.sleep(1)
+    time.sleep(0.3)
 
 # ====================================
 
@@ -207,7 +207,10 @@ def max2pd(json_data, MAIN_FOLDER, TK_GUI):
             multislider_patch_NAME =  f'multislider_{MULTISLIDER_INDEX}.pd'
             multislider_patch_FILE = MAIN_FOLDER + '/' + multislider_patch_NAME 
             MULTISLIDER_INDEX = MULTISLIDER_INDEX + 1
-            print(f'  Multislider abstraction saved in:  ', multislider_patch_NAME)
+            multislider_patch_NAME.replace('.pd', ' ')
+            message = f'  Multislider abstraction saved in: {multislider_patch_NAME}'
+            print_in_thinker(message, 'green', TK_GUI)
+
             with open(multislider_patch_FILE, "w") as f:
                 for item in multislider_patch:
                     f.write(item + "\n")

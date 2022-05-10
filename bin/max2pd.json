@@ -1,0 +1,65 @@
+{
+    "max2pd": {
+        "_DESCRIPTION_": "Pd objects that replace MAX/MSP Objects | Outlet and Inlet must be the same order!",
+        "sfrecord~": "writesf~",
+        "sfplay~": "readsf~",
+        "cycle~": "osc~",
+        "udpreceive": "netreceive",
+        "udpsend": "netsend",
+        "round": "else/quantizer",
+        "split": "else/spread",
+        "round~": "else/quantizer~",
+        "counter": "cyclone/counter",
+        "zl": "cyclone/zl",
+        "atodb~": "else/lin2db~",
+        "sprintf": "else/format",
+        "scale": "else/rescale",
+        "coll": "cyclone/coll",
+        "minmax~": "else/range~",
+        "onebang": "else/nmess",
+        "edge~": "cyclone/edge~",
+        "prepend": "list prepend", 
+        "HERE_THE_NAME_ON_MAX": "HERE_THE_NAME_ON_PD"
+    },
+
+
+    "pdobjects": {
+        "_DESCRIPTION_": "Here we will put links to replace objects",
+        "+": "+",
+        "-": "-",
+        "*": "*",
+        "/": "/",
+        "+~": "+~",	
+        "-~": "-~",
+        "*~": "*~",
+        "route": "route",
+        "inlet": "inlet",
+        "outlet": "outlet",
+        "adc~": "adc~",
+        "dac~": "dac~",
+        "s": "s",
+        "r": "r",
+        "sel": "sel",
+        "line": "line",
+        "metro": "metro",
+        "int": "int", 
+        "pack": "pack", 
+        "unpack": "unpack",
+        "sig~": "sig~",
+        "abs~": "abs~",
+        "sqrt~": "sqrt~",
+        "delay": "delay",
+        "del": "del",
+        "random": "random",
+        "t": "t"      
+        }, 
+
+    "abstractions": {
+        "_DESCRIPTION_": "Here we will put link to replace objects",
+        "hirt.convolver": "LINK_TO_RAW_ABSTRACTIONS"
+    },
+
+    "special_objects": {
+        "_DESCRIPTION_": "Here special objects, all the object text will be here!"
+    }
+}

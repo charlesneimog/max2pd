@@ -7,7 +7,6 @@ from max2pd import *
 
 script_path = os.path.dirname(sys.argv[0])
 
-
 # ================================================== Acabou de criar a interface ==================================================
 def exit_call():
     res = messagebox.askquestion('Convert new Patch', 'You want to convert a new Patch?')
@@ -32,7 +31,10 @@ def patch_chooser_dialog():
         root.destroy()
         sys.exit()
     else:
-        print(f'{pcolors.GREEN} File selected: {FILE} {pcolors.ENDC}')
+        name_of_file = os.path.basename(FILE)
+        name_of_file.replace('.maxpat', '')
+        message = f'File selected: {name_of_file}'
+        print_in_thinker(message, 'blue', root)
 
     patch_chooser.destroy()
     convert2pd(FILE, root)
@@ -65,7 +67,6 @@ def on_closing():
 
 def close_window(): 
     destroy()
-
 
 ## Create Main Window ==================================================
 global root
