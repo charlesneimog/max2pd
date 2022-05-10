@@ -5,7 +5,24 @@ import os
 import sys
 from max2pd import * 
 
-script_path = os.path.dirname(sys.argv[0])
+config_name = 'resources'
+# determine if application is a script file or frozen exe
+if getattr(sys, 'frozen', False):
+    application_path = os.path.dirname(sys.executable)
+elif __file__:
+    application_path = os.path.dirname(__file__)
+config_path = os.path.join(application_path, config_name)
+script_path = config_path
+
+# for Windows 
+if os.name == 'nt':
+    ICO_PATCH = f'{script_path}\\opensource.ico'
+## for Linux Ubuntu
+if os.name == 'posix':
+    ICO_PATCH = f'{script_path}/opensource.ico'
+## for Mac
+if os.name == 'posix':
+    ICO_PATCH = f'{script_path}/opensource.icns'
 
 # ================================================== Acabou de criar a interface ==================================================
 def exit_call():
@@ -19,7 +36,11 @@ def exit_call():
 def patch_chooser_dialog():
     global FILE
     patch_chooser = Tk()
-    patch_chooser.iconbitmap(f'{script_path}\\opensource.ico')
+    if os.path.exists(ICO_PATCH):
+        root.iconbitmap(ICO_PATCH)
+    else:
+        print('Icon not found')
+
     patch_chooser.title('Max2PD')
     patch_chooser.geometry("480x400+715+200")
     patch_chooser.withdraw()
@@ -71,7 +92,12 @@ def close_window():
 ## Create Main Window ==================================================
 global root
 root = Tk()
-root.iconbitmap(f'{script_path}\\opensource.ico')
+if os.path.exists(ICO_PATCH):
+    root.iconbitmap(f'{script_path}\\opensource.ico')
+else:
+    print('Icon not found')
+
+
 root.title('Max2PD')
 screen_width = root.winfo_screenwidth()
 screen_height = root.winfo_screenheight()

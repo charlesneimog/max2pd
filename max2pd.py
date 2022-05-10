@@ -28,7 +28,7 @@ def print_in_thinker(string, color, root):
     msg.pack()
     root.update()
     msg.destroy()
-    time.sleep(0.3)
+    time.sleep(0.3) ## To take time to see the messages and errors
 
 # ====================================
 
@@ -52,7 +52,7 @@ def convert2pd(FILE, TK_GUI):
 # ====================================
 
 def max2pd(json_data, MAIN_FOLDER, TK_GUI):
-    with open("max2pd.json") as json_file:
+    with open("./resources/max2pd.json") as json_file:
         max2pd_objects = json.load(json_file)
     INDEX = 0
     MULTISLIDER_INDEX = 0
