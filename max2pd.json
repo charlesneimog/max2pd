@@ -1,5 +1,6 @@
 {
     "max2pd": {
+        "_DESCRIPTION_": "Pd objects that replace MAX/MSP Objects | Outlet and Inlet must be the same order!",
         "sfrecord~": "writesf~",
         "sfplay~": "readsf~",
         "cycle~": "osc~",
@@ -9,10 +10,13 @@
         "split": "else/spread",
         "round~": "else/quantizer~",
         "counter": "cyclone/counter",
+        "zl": "cyclone/zl",
         "coll": "cyclone/coll"
+        
 
     },
     "pdobjects": {
+        "_DESCRIPTION_": "Here we will put links to replace objects",
         "+": "+",
         "-": "-",
         "*": "*",
@@ -37,6 +41,16 @@
         "sqrt~": "sqrt~",
         "delay": "delay",
         "del": "del",
+        "random": "random",
         "t": "t"      
-        }
+        }, 
+
+    "abstractions": {
+        "_DESCRIPTION_": "Here we will put link to replace objects",
+        "hirt.convolver": "LINK_TO_RAW_ABSTRACTIONS"
+    },
+
+    "special_objects": {
+        "_DESCRIPTION_": "Here special objects, all the object text will be here!"
+    }
 }

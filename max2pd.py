@@ -163,16 +163,23 @@ def max2pd(json_data):
                 VALUE = '#X obj ' + x_y_position + ' ' + PD_OBJECT_NAME + ' ' + OBJECT_ARGS + ' ;'
                 PATCH.append(VALUE)
 
-        elif box['box']['maxclass'] == 'slider': # Sliders
-            x_y_position = box['box']['patching_rect'][:2]
-            x_y_position = str(x_y_position[0]) + str(x_y_position[1])
+        # elif box['box']['maxclass'] == 'slider': # Sliders
+        #     x_y_position = box['box']['patching_rect'][:2]
+        #     x_y_position = str(x_y_position[0]) + str(x_y_position[1])
         
         # =====================================================
-        elif box['box']['maxclass'] == 'button': # Bang e Toggles
-            x_y_position = box['box']['patching_rect'][:2]
-            x_y_position = str(x_y_position[0]) + str(x_y_position[1])
+        # elif box['box']['maxclass'] == 'button': # Bang 
+        #     x_y_position = box['box']['patching_rect'][:2]
+        #     x_y_position = str(x_y_position[0]) + str(x_y_position[1])
         
         # =====================================================
+
+        elif box['box']['maxclass'] == 'toggle': # Toggle
+            x_y_position = box['box']['patching_rect'][:2]
+            x_y_position = str(x_y_position[0]) + str(x_y_position[1])
+
+
+
         elif box['box']['maxclass'] == 'inlet':
             x_y_position = box['box']['patching_rect'][:2]
             x_y_position = str(x_y_position[0]) + " " + str(x_y_position[1])
@@ -206,6 +213,8 @@ def max2pd(json_data):
             except:
                 message_text = ' '
             VALUE = "#X text" + " " + x_y_position + " " + message_text + " ;" 
+            PATCH.append(VALUE)
+            
         # =====================================================
         else: 
             x_y_position = box['box']['patching_rect'][:2]
@@ -224,7 +233,7 @@ def max2pd(json_data):
         connections = '#X connect ' + connections + ' ;'
         PATCH.append(connections)
     
-    time.sleep(2)
+    time.sleep(1.3)
     print(f'{pcolors.GREEN}Patch created!{pcolors.ENDC}')
     return PATCH
 
