@@ -1,6 +1,9 @@
-import json
+with open('objects_not_found.txt') as f:
+    # if file not exists, create it
+    lines = f.readlines()
 
-with open("max2pd.json") as json_file:
-    data = json.load(json_file)
 
-print(data['udpreceive'])
+# remove \n from the end of each line
+lines = [line.rstrip('\n') for line in lines]
+
+print(lines)

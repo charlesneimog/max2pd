@@ -7,11 +7,11 @@
         "udpsend": "netsend",
         "round": "else/quantizer",
         "split": "else/spread",
-        "round~": "else/quantizer~"
-        
+        "round~": "else/quantizer~",
+        "counter": "cyclone/counter",
+        "coll": "cyclone/coll"
+
     },
-
-
     "pdobjects": {
         "+": "+",
         "-": "-",
@@ -24,6 +24,19 @@
         "inlet": "inlet",
         "outlet": "outlet",
         "adc~": "adc~",
-        "dac~": "dac~"
+        "dac~": "dac~",
+        "s": "s",
+        "r": "r",
+        "sel": "sel",
+        "line": "line",
+        "metro": "metro",
+        "int": "int", 
+        "pack": "pack", 
+        "sig~": "sig~",
+        "abs~": "abs~",
+        "sqrt~": "sqrt~",
+        "delay": "delay",
+        "del": "del",
+        "t": "t"      
         }
 }

@@ -1,0 +1,17 @@
+zl
+random
+gate
+scale
+sprintf
+hirt.convolver~
+zmap
+minmax~
+unpack
+slide~
+cross~
+onebang
+>~
+edge~
+thresh~
+patcherargs
+atodb~
